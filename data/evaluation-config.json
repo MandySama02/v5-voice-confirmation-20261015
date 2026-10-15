@@ -1,0 +1,82 @@
+{
+  "evaluationId": "v5-c-pace-confirmation-20261015-r1",
+  "revision": 1,
+  "title": "C 版声音节奏确认",
+  "priorResult": {
+    "winner": "C",
+    "systemRecommendation": "C",
+    "humanChoice": "C",
+    "weightedScore": 4.5,
+    "summary": "声音自然、发音准确，主要遗留问题是整段语速偏赶。",
+    "scores": [
+      { "label": "自然度", "value": 5 },
+      { "label": "稳定性", "value": 4 },
+      { "label": "发音", "value": 5 },
+      { "label": "音色", "value": 4 },
+      { "label": "干净度", "value": 4 }
+    ]
+  },
+  "reference": {
+    "audio": "audio/reference.wav",
+    "durationSeconds": 16.58,
+    "kind": "original-authorized-recording",
+    "authorizedForPublicEvaluation": true,
+    "semanticText": "呃，什么时候开票，在哪里，怎么去买这些东西，明天我会再发一个动态给大家。所以，嗯，如果大家想知道细节的话，可以去关注一下‘封茗囧菌’的抖音，还有‘封茗囧菌’的微博，还有‘封茗囧菌资讯站’的……",
+    "alignmentText": "呃，什么时候开票，在哪里，怎么去买这些东西，明天我会再发一个动态给大家所以……嗯，如果大家想知道细节的话，可以去关注一下‘封茗囧菌’的抖音，还有‘封茗囧菌’的微博，还有‘封茗囧菌资讯站’的……",
+    "sha256": "cdae2f470b1958c070d4b1fa024eab7eb8a07bce92d7c01953ba4a40003ff911"
+  },
+  "script": {
+    "text": "刚看到六层循环，先别急着记变量。它们并没有改变矩阵乘法，只是让程序先圈出一小块数据，算完再移动到下一块。具体来看，字母 I 等于一，锁定 Q 的第一行；字母 J 等于二，锁定输出列。分块以后，I 零和 J 零决定输出块，K 零把完整点积切成几段。注意，代码里排在第六行的那一句，只在新输出块开始时清零。换到下一个 K 零片段以后，要保留前一段的部分和，再继续累加。",
+    "focus": ["第一行", "第六行", "I 零", "J 零", "K 零", "部分和"]
+  },
+  "variants": [
+    {
+      "id": "c1",
+      "audio": "audio/sample-01.wav",
+      "sha256": "1c07daa3296fc099a9c9b8959de205e12293fe1eccda8eca4efb395ab1e57d95",
+      "durationSeconds": 30.56,
+      "revealName": "C1 · 原始节奏基准版",
+      "processing": "同一次连续合成的原始结果；仅首尾裁切、48 kHz 单声道 PCM 与响度统一。",
+      "tempo": 1.0,
+      "silencePolicy": "不改动内部停顿"
+    },
+    {
+      "id": "c2",
+      "audio": "audio/sample-02.wav",
+      "sha256": "9b6c8e6d1289f51b492ce94b51bc26264a529897a4eabca1432ce9f96d84f86c",
+      "durationSeconds": 32.146,
+      "revealName": "C2 · 节奏修正版",
+      "processing": "从 C1 同一波形派生；保音调放慢约 5%。自动检查未发现超过约 700 毫秒的内部长停顿，因此没有额外裁切停顿。",
+      "tempo": 0.95,
+      "silencePolicy": "已检查 >700 ms 的内部静音；本次未检出，未实施裁切"
+    }
+  ],
+  "generation": {
+    "model": "Qwen3-TTS-12Hz-1.7B-Base",
+    "referenceVersion": "16.58 秒连续原声（未降噪、未拼接）",
+    "language": "Chinese",
+    "doSample": false,
+    "xVectorOnlyMode": false,
+    "precision": "float16",
+    "attention": "eager",
+    "maxNewTokens": 640
+  },
+  "criteria": [
+    { "id": "pace", "label": "语速", "question": "是否从容、不赶？", "threshold": 4 },
+    { "id": "phrasing", "label": "停连", "question": "停顿与断句是否自然？", "threshold": 4 },
+    { "id": "pronunciation", "label": "发音", "question": "重点词和字母变量是否读对？", "threshold": 4 },
+    { "id": "timbre", "label": "音色", "question": "是否与上一轮 C 和原声参考一致？", "threshold": 4 }
+  ],
+  "listenGate": 0.8,
+  "retry": {
+    "maxRetries": 1,
+    "policy": "两版均不通过时只允许一次定向重做；第二轮仍失败则结束。"
+  },
+  "disclosure": {
+    "samplesAreAiGenerated": true,
+    "referenceIsAuthorized": true,
+    "publicHosting": "本页及音频托管在公开 GitHub Pages；noindex 并不构成访问控制。",
+    "tracking": false,
+    "signoffScope": "签收仅代表声音与节奏方案通过，不触发 38 段正式旁白生产。"
+  }
+}

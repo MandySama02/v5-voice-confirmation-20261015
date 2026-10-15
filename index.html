@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <meta name="description" content="C 版声音节奏匿名确认页" />
+    <title>C 版声音节奏确认</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="返回页面顶部">
+        <span class="brand-mark">C</span>
+        <span>
+          <strong>声音节奏确认</strong>
+          <small>V5 · Pace & phrasing check</small>
+        </span>
+      </a>
+      <div class="status-pill" id="saveStatus"><span></span>记录仅保存在本机</div>
+    </header>
+
+    <main id="top">
+      <section class="hero shell">
+        <div class="hero-copy">
+          <p class="eyebrow">只确认一件事：C 的节奏是否真正好听</p>
+          <h1>同一个声音，<br /><em>哪一种停连更自然？</em></h1>
+          <p class="hero-lead">
+            这不是又一次海选。模型、音色和参考声音都已经锁定；你只需要盲听甲乙两版，检查语速、停顿、发音与音色一致性。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#reference">开始确认</a>
+            <button class="button ghost" id="resetButton" type="button">清空本机记录</button>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="本轮边界">
+          <div class="mini-label">本轮边界</div>
+          <div class="metric"><strong>2</strong><span>个匿名节奏版本</span></div>
+          <div class="metric"><strong>4</strong><span>项必须全部合格</span></div>
+          <div class="metric"><strong>0</strong><span>段正式旁白会被自动生产</span></div>
+          <p>正式签收只代表声音与节奏方案通过。</p>
+        </aside>
+      </section>
+
+      <nav class="progress-nav shell" aria-label="确认流程">
+        <a href="#context"><span>01</span>前情</a>
+        <a href="#reference"><span>02</span>原声</a>
+        <a href="#blind-test"><span>03</span>盲听</a>
+        <a href="#decision"><span>04</span>签收</a>
+      </nav>
+
+      <section class="section shell" id="context">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 · 前情摘要</p>
+            <h2>为什么只留下 C？</h2>
+          </div>
+          <span class="section-number">01</span>
+        </div>
+        <div class="context-grid">
+          <article class="panel recommendation">
+            <span class="tag">上一轮结论</span>
+            <h3>系统推荐与人工选择一致：C</h3>
+            <p>声音自然、发音准确，主要遗留问题不是音色，而是整段略显赶促。本轮只处理节奏，不改变声音来源。</p>
+            <div class="score-row" id="priorScores"></div>
+          </article>
+          <article class="panel locked-list">
+            <h3>已经锁定</h3>
+            <ul>
+              <li><span>模型</span><strong>Qwen3-TTS 1.7B Base</strong></li>
+              <li><span>参考</span><strong>16.58 秒连续原声</strong></li>
+              <li><span>生成</span><strong>一次连续合成</strong></li>
+              <li><span>变量</span><strong>仅语速与异常长停顿</strong></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section shell" id="reference">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">02 · 原声锚点</p>
+            <h2>先记住真实说话的呼吸</h2>
+          </div>
+          <span class="section-number">02</span>
+        </div>
+        <div class="reference-layout">
+          <article class="panel player-panel">
+            <div class="audio-title">
+              <span class="wave-icon" aria-hidden="true">≋</span>
+              <div><strong>原始参考音频</strong><small>获授权公开 · 非 AI 合成</small></div>
+            </div>
+            <audio id="referenceAudio" controls preload="metadata"></audio>
+            <p class="audio-note">听的重点不是录音室纯净度，而是“大家所以”连读，以及“所以……嗯”之间的真实停顿。</p>
+          </article>
+          <article class="panel transcript-panel">
+            <div class="mini-label">准确转写</div>
+            <blockquote id="referenceTranscript"></blockquote>
+            <div class="phrasing-hint">
+              <span>真实停连</span>
+              <strong>明天我会再发一个动态给大家所以</strong>
+              <i></i>
+              <strong>嗯</strong>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section shell" id="blind-test">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03 · 甲乙盲听</p>
+            <h2>听完，再打分</h2>
+            <p>甲乙顺序由浏览器第一次打开时随机决定，刷新不会改变。两段都播放到 80% 后，评分区才会开放。</p>
+          </div>
+          <span class="section-number">03</span>
+        </div>
+
+        <div class="script-card">
+          <span>两版共用确认稿</span>
+          <p id="confirmationScript"></p>
+        </div>
+
+        <div class="variant-grid" id="variantGrid"></div>
+      </section>
+
+      <section class="section shell" id="decision">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">04 · 严格验收</p>
+            <h2>四项都过线，才算候选</h2>
+            <p>任何一项低于 4 分，都不会因为“相对更好”而被强行推荐。</p>
+          </div>
+          <span class="section-number">04</span>
+        </div>
+
+        <div class="panel gate-panel" id="gatePanel">
+          <div class="gate-status" id="gateStatus">
+            <span class="gate-icon">⌛</span>
+            <div><strong>等待完整评分</strong><p>请先听完甲乙两版，并完成八组评分。</p></div>
+          </div>
+          <div class="decision-options" id="decisionOptions"></div>
+          <button class="button primary wide" id="revealButton" type="button" disabled>确认选择并揭晓</button>
+        </div>
+
+        <div class="panel reveal-panel hidden" id="revealPanel">
+          <div class="reveal-header">
+            <div><p class="eyebrow">结果揭晓</p><h3 id="revealTitle"></h3></div>
+            <span class="tag">不触发正式配音</span>
+          </div>
+          <div class="reveal-grid" id="revealGrid"></div>
+          <div class="signoff-summary" id="signoffSummary"></div>
+          <label class="confirm-check">
+            <input type="checkbox" id="scopeCheck" />
+            <span>我确认：本次签收仅代表声音与节奏方案通过；不会自动生成 38 段正式旁白。</span>
+          </label>
+          <button class="button primary wide" id="signoffButton" type="button" disabled>正式签收本轮结果</button>
+        </div>
+
+        <div class="panel export-panel hidden" id="exportPanel">
+          <div><p class="eyebrow">已完成</p><h3 id="completionTitle">本轮记录已签收</h3><p id="completionText"></p></div>
+          <div class="export-actions">
+            <button class="button secondary" id="exportJson" type="button">导出 JSON</button>
+            <button class="button secondary" id="exportMarkdown" type="button">导出 Markdown</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="public-note shell">
+        <strong>公开性说明</strong>
+        <p>本页托管于公开 GitHub Pages。虽然设置了 noindex 与 robots.txt，但这不是访问控制：页面与音频仍可能被直接访问或下载。页面不含统计、广告或第三方追踪脚本。</p>
+      </section>
+    </main>
+
+    <footer class="shell">
+      <span>V5 C · Voice confirmation</span>
+      <span>AI 合成样音已明确标注</span>
+    </footer>
+
+    <template id="variantTemplate">
+      <article class="panel variant-card">
+        <div class="variant-head">
+          <span class="variant-label"></span>
+          <span class="ai-badge">AI 合成</span>
+        </div>
+        <div class="listen-state"><span></span><strong>尚未听完</strong></div>
+        <audio controls preload="metadata"></audio>
+        <div class="rating-lock"><span>🔒</span>播放到 80% 后开放评分</div>
+        <fieldset class="ratings" disabled></fieldset>
+        <label class="notes-label">自由备注<textarea rows="3" placeholder="例如：第六行读音、K 零停顿、尾音、机械感……"></textarea></label>
+      </article>
+    </template>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
